@@ -30,7 +30,7 @@ class ProductController extends Controller
         return Datatables::of($model)->setRowId('id')->addIndexColumn()->addColumn(
             'tools',
             function ($record) {
-                return '<button type="button" class="btn btn-sm btn-outline-info" onclick="f_edit_form_physical_check(' . $record->id . ')"><i class="mdi mdi-file-edit"></i> </button>';
+                return '<button type="button" class="btn btn-sm btn-outline-info" onclick="f_edit_form_product(' . $record->id . ')"><i class="fas fa-edit"></i> </button><button type="button" class="btn btn-sm btn-outline-danger" onclick="f_delete_form_product(' . $record->id . ')"><i class="fas fa-trash"></i> </button>';
             }
         )->rawColumns(['tools'])->toJson();
     }
@@ -74,22 +74,22 @@ class ProductController extends Controller
             $data->description = $request->description;
             $data->price = $request->price;
             
-            // Proses handling untuk file attachment nya
-            $listAttachment = [];
             // cek ada attachment ga
             if ($request->hasFile('attachments')) {
                 // cek kalo ada product id nya, hapus foto foto lama, dan upload pake foto foto baru
-                if ($request->has('product_id')) {
+                foreach ($request->file('attachments') as $key => $file) {
+                    $path = Storage::putFile('public/products', $file,);
+                    $listAttachment[] = $path;
+                }
+                if ($request->has('product_id') && count($listAttachment) > 0) {
                     foreach ($data->images as $path) {
                         if (Storage::exists($path)) {
                             Storage::delete($path);
                         }
                     }
                 }
-                foreach ($request->file('attachments') as $key => $file) {
-                    $path = Storage::putFile('public/products', $file,);
-                    $listAttachment[] = $path;
-                }
+            } else {
+                $listAttachment = $data->images;
             }
             $data->images = $listAttachment;
             $data->save();
