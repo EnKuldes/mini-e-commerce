@@ -74,22 +74,21 @@ class ProductController extends Controller
             $data->description = $request->description;
             $data->price = $request->price;
             
+            $listAttachment = ($request->has('product_id') ? $data->images : []);
             // cek ada attachment ga
             if ($request->hasFile('attachments')) {
-                // cek kalo ada product id nya, hapus foto foto lama, dan upload pake foto foto baru
-                foreach ($request->file('attachments') as $key => $file) {
-                    $path = Storage::putFile('public/products', $file,);
-                    $listAttachment[] = $path;
-                }
-                if ($request->has('product_id') && count($listAttachment) > 0) {
+                if ($request->has('product_id')) {
                     foreach ($data->images as $path) {
                         if (Storage::exists($path)) {
                             Storage::delete($path);
                         }
                     }
                 }
-            } else {
-                $listAttachment = $data->images;
+                // cek kalo ada product id nya, hapus foto foto lama, dan upload pake foto foto baru
+                foreach ($request->file('attachments') as $key => $file) {
+                    $path = Storage::putFile('public/products', $file,);
+                    $listAttachment[] = $path;
+                }
             }
             $data->images = $listAttachment;
             $data->save();
