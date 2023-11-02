@@ -65,7 +65,45 @@ window['toast'] = Swal.mixin({
   timer: 3000
 });
 
-// Handle Ajax Failed
+{{-- Func untuk Kirim Form --}}
+function formSend(url, data, method) {
+    var headerReq = {};
+    if (method == "post") {
+        headerReq = {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        };
+    }
+    $.ajax(url, {
+        headers: headerReq,
+        method: method,
+        data: data /* format dalam {} */
+    }).done(function(data, textStatus, jqXHR) {
+      window['toast'].fire({
+        icon: 'success',
+        title: 'Success submit form.'
+      });
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+      window['toast'].fire({
+        icon: 'error',
+        title: 'Fail submit form.'
+      });
+      ajaxFailedNotify(jqXHR.responseJSON, errorThrown);
+    }).always(function(data, textStatus, jqXHR) {
+        return true;
+    });
+}
+{{-- Func untuk Toggle Button ke Loading --}}
+function toggleStateButton(btn, state = true, text = '') {
+    var b = btn;
+    if (state) {
+        b.html(
+            '<span class="spinner-grow spinner-grow-sm me-1" role="status" aria-hidden="true"></span> Loading...'
+        );
+    } else {
+        b.html((text != '' ? text : 'Save changes'));
+    }
+}
+{{-- Func Ajax Failed Message --}}
 function ajaxFailedNotify(response, errorThrown) {
   if (typeof response !== 'object') {
     window['toast'].fire({
