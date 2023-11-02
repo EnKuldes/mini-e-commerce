@@ -38,7 +38,7 @@
 		window['tbl'] = $("#orderTable").DataTable({
 			paging: true,
 			lengthChange: false,
-			searching: false,
+			searching: !false,
 			ordering: true,
 			info: true,
 			autoWidth: false,
@@ -95,15 +95,32 @@
 	          order_id: order_id
 	      },
 	  }).done(function(data, textStatus, jqXHR) {
-	      console.log(data);
-	      $('#modal-view-product').modal('show');
+	      var tHtml = "", fHtml = "";
+	      var details = data.order_details;
+	      if (details.length == 0) {
+	      	tHtml = '<tr> <td colspan="4" rowspan="2" class="text-center">Nothing here</td> </tr>';
+	      	fHtml = '<tr><td colspan="1" rowspan="2">Total</td><td colspan="2" rowspan="2">Rp. '+parseInt(0).toLocaleString('id-ID')+'</td></tr>'
+	      }
+	      for (var i = 0; i < details.length; i++) {
+	      	tHtml += '<tr>';
+	      	tHtml += '<td>'+details[i]['product']['name']+'</td>';
+	      	tHtml += '<td>'+details[i]['qty']+'</td>';
+	      	tHtml += '<td>Rp. '+details[i]['current_price'].toLocaleString('id-ID')+'</td>';
+	      	tHtml += '</tr>';
+	      }
+	      fHtml = '<tr><td colspan="2" rowspan="2">Total</td><td colspan="1" rowspan="2">Rp. '+parseInt(data.total_price).toLocaleString('id-ID')+'</td></tr>;'
+	      $('#orderDetailsTable tbody').html(tHtml);
+	      $('#orderDetailsTable tfoot').html(fHtml);
+	      $('#orderDate').html(data.ordered_at)
+	      $('#modal-view-order').modal('show');
 	  }).fail(function(jqXhr, json, errorThrown) {
 	      ajaxFailedNotify(jqXhr.responseJSON, errorThrown)
 	  }).always(function() {});
 	}
 
 	$('#modal-view-order').on('hidden.bs.modal', function(e) {
-	  // do nothing
+	  $('#orderDetailsTable tbody').html('');
+    $('#orderDetailsTable tfoot').html('');
 	});
 </script>
 @endpush
@@ -161,63 +178,29 @@
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Order Detail</h4>
+				<h4 class="modal-title">Ordered at <span id="orderDate"></span></h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
-				<table class="table">
+				<table class="table" id="orderDetailsTable">
 					<thead>
 						<tr>
-							<th style="width: 10px">#</th>
-							<th>Task</th>
-							<th>Progress</th>
-							<th style="width: 40px">Label</th>
+							<th>Product Name</th>
+							<th style="width: 15%">Qty</th>
+							<th style="width: 30%">Price</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>1.</td>
-							<td>Update software</td>
-							<td>
-								<div class="progress progress-xs">
-									<div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-								</div>
-							</td>
-							<td><span class="badge bg-danger">55%</span></td>
-						</tr>
-						<tr>
-							<td>2.</td>
-							<td>Clean database</td>
-							<td>
-								<div class="progress progress-xs">
-									<div class="progress-bar bg-warning" style="width: 70%"></div>
-								</div>
-							</td>
-							<td><span class="badge bg-warning">70%</span></td>
-						</tr>
-						<tr>
-							<td>3.</td>
-							<td>Cron job running</td>
-							<td>
-								<div class="progress progress-xs progress-striped active">
-									<div class="progress-bar bg-primary" style="width: 30%"></div>
-								</div>
-							</td>
-							<td><span class="badge bg-primary">30%</span></td>
-						</tr>
-						<tr>
-							<td>4.</td>
-							<td>Fix and squish bugs</td>
-							<td>
-								<div class="progress progress-xs progress-striped active">
-									<div class="progress-bar bg-success" style="width: 90%"></div>
-								</div>
-							</td>
-							<td><span class="badge bg-success">90%</span></td>
-						</tr>
 					</tbody>
+					<tfoot class="bg bg-success">
+						<tr>
+							<td colspan="2" rowspan="2">Total</td>
+							<td colspan="1" rowspan="2">Rp. 0.00</td>
+						</tr>
+
+					</tfoot>
 				</table>
 			</div>
 			<div class="modal-footer justify-content-between">

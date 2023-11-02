@@ -52,9 +52,13 @@ class OrderController extends Controller
         return Datatables::of($model)->setRowId('id')->addIndexColumn()->addColumn(
             'tools',
             function ($record) {
-                return '<button type="button" class="btn btn-sm btn-outline-info" onclick="f_view_order(' . $record->id . ')"><i class="fas fa-edit"></i> </button>';
+                return '<button type="button" class="btn btn-sm btn-outline-info" onclick="f_view_order(' . $record->id . ')"><i class="fas fa-glasses"></i> View</button>';
             }
-        )->rawColumns(['tools'])->toJson();
+        )->editColumn('order_date', function ($record) {
+            return $record->order_date->format('Y-m-d H:i:s');
+        })->editColumn('total_price', function ($record) {
+            return 'Rp. '.number_format($record->total_price,2);
+        })->rawColumns(['tools'])->toJson();
     }
 
     public function getCart(Request $request)
@@ -86,6 +90,7 @@ class OrderController extends Controller
             }, 'orderDetails.product' => function ($query) {
                 return $query->select('id', 'name', 'description', 'price', 'images');
             }])->firstOrFail();
+            $data->ordered_at = $data->order_date->format('Y-m-d H:i:s');
             return response()->json($data, 200);
         } catch (\Illuminate\Database\QueryException $e) {
             return response()->json(['message' => 'Failed to fetch data. '], 500);
@@ -184,7 +189,7 @@ class OrderController extends Controller
         try {
             $data = \App\Models\Order::where('user_id', '=', \Auth::id())->where('order_status', '=', 'created')->update([
                 'order_status' => 'submitted'
-                , 'order_date' => Carbon::now()->format('Y-m-d')
+                , 'order_date' => Carbon::now()->format('Y-m-d H:i:s')
             ]);
         } catch (\Illuminate\Database\QueryException $e) {
             return response()->json(['message' => 'Failed to fetch data. '], 500);
