@@ -60,7 +60,7 @@
 			@endif
 			@foreach ($products as $record)
 				<div class="col-sm-2 pr-1">
-					<a href="{{ url("Page/Order/Information?product_id={$record->id}") }}" title="{{ $record->name }}"{{--  target=”_blank” --}}>
+					<a href="{{ url("Request/Order/Information?product_id={$record->id}") }}" title="{{ $record->name }}"{{--  target=”_blank” --}}>
 						<div class="card card-outline-info">
 							<div class="card-body">
 								<div class="text-center">

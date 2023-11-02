@@ -13,7 +13,7 @@ class ProductController extends Controller
 {
     public function __construct()
     {
-        // can_access(\Request::path());
+        can_access(\Request::path());
     }
 
     // Halamannya

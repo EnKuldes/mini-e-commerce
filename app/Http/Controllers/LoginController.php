@@ -64,8 +64,7 @@ class LoginController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'active' => '1'])) {
             $request->session()->regenerate();
 
-            // return redirect()->route('redirect-first-page');
-            return redirect()->route('halaman-tes-auth');
+            return redirect()->route('redirect-first-page');
         }
 
         return back()->withErrors([

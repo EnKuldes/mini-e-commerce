@@ -26,7 +26,7 @@ class AdminController extends Controller
 {
     public function __construct()
     {
-        // can_access(\Request::path());
+        can_access(\Request::path());
     }
 
     // Halaman

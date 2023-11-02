@@ -13,7 +13,7 @@ class OrderController extends Controller
 {
     public function __construct()
     {
-        // can_access(\Request::path());
+        can_access(\Request::path());
     }
 
     // Halaman
@@ -36,7 +36,8 @@ class OrderController extends Controller
         return view('order.cart');
     }
 
-    public function pageInformation(Request $request)
+    // Request
+    public function getInformation(Request $request)
     {
         $request->validate([
             'product_id' => 'required|numeric'
@@ -45,7 +46,6 @@ class OrderController extends Controller
         return view('order.product', ['product' => $product]);
     }
 
-    // Request
     public function getListOrders(Request $request)
     {
         $model = \App\Models\Order::select('id', 'order_date', 'total_price', 'order_status')->orderByDesc('order_date');
