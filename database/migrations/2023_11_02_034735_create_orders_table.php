@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->integer('total_price')->default(0);
-            $table->date('order_date')->nullable();
+            $table->datetime('order_date')->nullable();
             $table->enum('order_status', ['created', 'submitted'])->default('created');
             $table->timestamps();
         });
