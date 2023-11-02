@@ -100,6 +100,9 @@ class LoginController extends Controller
 
         try {
             $data = \App\Models\User::where('email', '=', $validator['email'])->firstOrFail();
+            if ($data->active == 0) {
+                return back()->withErrors(['email' => 'Account was disabled.']);
+            }
             $data->password = $validator['password'];
             $data->save();
         }  catch (\Illuminate\Database\QueryException $e) {
