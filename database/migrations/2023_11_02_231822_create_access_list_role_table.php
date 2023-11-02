@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('access_list_role', function (Blueprint $table) {
+        Schema::create('access_list_roles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('access_list_id')->constrained();
             $table->foreignId('role_id')->constrained();
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('access_list_role');
+        Schema::dropIfExists('access_list_roles');
     }
 };
