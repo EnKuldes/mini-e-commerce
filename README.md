@@ -73,5 +73,7 @@ For the database itself, Im making it simple based on task that I given and unde
 ![ERD](./erd.png)
 
 Table Order have 2 relationship, that is to Table User (Many to One) and Table OrderDetail (One to Many). Since Table Order also functioning as history, im adding indexes both on order_status and order_date becasue those 2 columns would most likely being used as filter to show data using between or other conditionals.
+
 I'm also creating role based access control, with tables like Role, AccessList, RoleUser and AccessListRole. Table AccessList includes record for all of the pages and request. Table RoleUser and AccessListRole is a pivot table that connect between Role with User table and Access List with Role table. With this relationship User can have multiple roles and so role with access list table.
+
 For future improvement adding a category table to describe what are the product caterogized is a good thing as its will help on creating recommendation system.
