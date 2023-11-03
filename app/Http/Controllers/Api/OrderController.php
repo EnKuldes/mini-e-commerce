@@ -39,18 +39,16 @@ class OrderController extends Controller
     public function checkout(Request $request): JsonResponse
     {
         try {
-            $data = \App\Models\Order::where('user_id', '=', $request->user()->id)->where('order_status', '=', 'created')->update([
-                'order_status' => 'submitted'
-                , 'order_date' => Carbon::now()->format('Y-m-d H:i:s')
-            ]);
-
-            if (!$data) {
-                return $this->sendErrorResponse('Nothing in cart. ', [], 404);
-            }
+            $data = \App\Models\Order::where('user_id', '=', $request->user()->id)->where('order_status', '=', 'created')->firstOrFail();
+            $data->order_status = 'submitted';
+            $data->order_date = Carbon::now()->format('Y-m-d H:i:s');
+            $data->save();
 
             return $this->sendResponse(new OrderResource($data), 'success checking out');
         } catch (\Illuminate\Database\QueryException $e) {
             return $this->sendErrorResponse('Failed to checkout. ', $e->getMessage(), 500);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return $this->sendErrorResponse('Nothing in cart.', $e->getMessage(), 404);
         }
     }
 
