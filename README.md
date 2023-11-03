@@ -23,17 +23,17 @@ Plain simple e-commerce with role based access control, CRUD Products and Order 
     # copy env file
     cp .env.example .env
 
-		# generate app key
-		php artisan key:generate
+	# generate app key
+	php artisan key:generate
 		
-		# create symbolic link for storage folder
-		php artisan storage:link
+    # create symbolic link for storage folder
+    php artisan storage:link
 
-		# run migration and seeder, make sure that .env file already being setup (host, password, user, port and database)
-		php artisan migrate --seed
+    # run migration and seeder, make sure that .env file already being setup (host, password, user, port and database)
+    php artisan migrate --seed
 
-		# run laravel passport keys to generate
-		php artisan passport:install
+    # run laravel passport keys to generate
+    php artisan passport:install
     ```
 
  3. Edit .env file to your need (ex. DB_HOST, DB_PASSWORD, APP_NAME, APP_ENV, etc) using your fav text editor. And if you're on Linux for example using Centos and there is an error on storage kinda things, make sure that selinux(RedHat variant) is allowing to write/read or permission is set to 755(rwx-rw-rw).
