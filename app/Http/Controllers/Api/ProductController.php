@@ -49,7 +49,7 @@ class ProductController extends Controller
             $data->images = $listAttachment;
             $data->save();
 
-            return $this->sendResponse(new ProductResource($data), 'success create product');
+            return $this->sendResponse(new ProductResource($data), 'success create product', 201);
         } catch (Exception $e) {
             return $this->sendErrorResponse('Failed to Upload Images. ', $e->getMessage(), 500);
         } catch (\Illuminate\Database\QueryException $e) {
@@ -123,7 +123,7 @@ class ProductController extends Controller
             $data = Product::findOrFail($id);
             $data->delete();
 
-            return $this->sendResponse([], 'success delete product');   
+            return $this->sendResponse([], 'success delete product');
         } catch (Exception $e) {
             return $this->sendErrorResponse('Failed to delete product. ', $e->getMessage(), 500);
         } catch (\Illuminate\Database\QueryException $e) {
@@ -134,13 +134,13 @@ class ProductController extends Controller
     }
 
     // ========
-    private function sendResponse($data, $message)
+    private function sendResponse($data, $message, $successCode = 200)
     {
         return response()->json([
             'success' => true
             , 'data' => $data
             , 'message' => $message
-        ], 200);
+        ], $successCode);
     }
 
     private function sendErrorResponse($error, $errorMessage = [], $errorCode = 404)
