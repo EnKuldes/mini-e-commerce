@@ -48,7 +48,7 @@ class OrderController extends Controller
 
     public function getListOrders(Request $request)
     {
-        $model = \App\Models\Order::select('id', 'order_date', 'total_price', 'order_status')->orderByDesc('order_date');
+        $model = \App\Models\Order::select('id', 'order_date', 'total_price', 'order_status');
         return Datatables::of($model)->setRowId('id')->addIndexColumn()->addColumn(
             'tools',
             function ($record) {

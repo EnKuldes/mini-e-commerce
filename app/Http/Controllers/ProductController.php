@@ -25,14 +25,18 @@ class ProductController extends Controller
     // Request disini
     public function getListProducts(Request $request)
     {
-        $model = \App\Models\Product::query()->select('id', 'name', 'price', 'created_at')->orderByDesc('id');
+        $model = \App\Models\Product::query()->select('id', 'name', 'price', 'created_at');
 
         return Datatables::of($model)->setRowId('id')->addIndexColumn()->addColumn(
             'tools',
             function ($record) {
                 return '<button type="button" class="btn btn-sm btn-outline-info" onclick="f_edit_form_product(' . $record->id . ')"><i class="fas fa-edit"></i> </button><button type="button" class="btn btn-sm btn-outline-danger" onclick="f_delete_form_product(' . $record->id . ')"><i class="fas fa-trash"></i> </button>';
             }
-        )->rawColumns(['tools'])->toJson();
+        )->editColumn('created_at', function ($record) {
+            return $record->created_at->format('Y-m-d H:i:s');
+        })->editColumn('price', function ($record) {
+            return 'Rp. '.number_format($record->price,2);
+        })->rawColumns(['tools'])->toJson();
     }
 
     public function getProduct(Request $request)

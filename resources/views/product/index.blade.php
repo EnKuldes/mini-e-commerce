@@ -37,8 +37,8 @@
 		"use strict";
 		window['tbl'] = $("#productTable").DataTable({
 			paging: true,
-			lengthChange: false,
-			searching: false,
+			lengthChange: !false,
+			searching: !false,
 			ordering: true,
 			info: true,
 			autoWidth: false,
@@ -187,7 +187,7 @@
 	      var keys = ['product_id', 'name', 'description', 'price', 'images', 'id'];
 	      for (var i = 0; i < keys.length; i++) {
 	          if (['images'].includes(keys[i])) {
-	              if (data.images) {
+	              if (data.images && data.images.length > 0) {
 	                  $('#form-product-edit input[name="attachments[]"]').parent().parent().parent().find('span').addClass('bg-success').html('Exist');
 	              } else {
 	                  $('#form-product-edit input[name="attachments[]"]').parent().parent().parent().find('span').addClass('bg-warning').html('Nonexistent');
