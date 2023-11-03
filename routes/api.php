@@ -26,4 +26,11 @@ Route::get('/user', 'App\Http\Controllers\Api\LoginController@user');
 // REST Routing dengan Laravel Passport
 Route::middleware(['auth:api'])->group(function() {
     Route::apiResource('products', \App\Http\Controllers\Api\ProductController::class);
+    Route::group(['prefix' => 'orders'], function() {
+        Route::get('/', [\App\Http\Controllers\Api\OrderController::class, 'index']);
+        Route::get('cart', [\App\Http\Controllers\Api\OrderController::class, 'cart']);
+        Route::get('checkout', [\App\Http\Controllers\Api\OrderController::class, 'checkout']);
+        Route::post('cart', [\App\Http\Controllers\Api\OrderController::class, 'addToCart']);
+        Route::delete('cart', [\App\Http\Controllers\Api\OrderController::class, 'removeFromCart']);
+    });
 });

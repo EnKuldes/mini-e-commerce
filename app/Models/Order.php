@@ -11,7 +11,7 @@ class Order extends Model
     protected $fillable = ['user_id', 'total_price', 'order_date', 'order_status'];
 
     protected $casts = [
-        'order_date' => 'datetime',
+        'order_date' => 'datetime:Y-m-d H:i:s',
     ];
 
     public function user()
