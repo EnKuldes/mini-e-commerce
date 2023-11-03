@@ -21,7 +21,7 @@ class MenuRoleSeeder extends Seeder
         ];
         // list dari menu atau request
         $access_lists = [
-            ['id' => '1', 'type' => 'page', 'parent' => '0', 'order' => '99', 'icon' => 'fas fa-superscript', 'name' => 'Admin', 'link' => '#', 'child' => '1'],
+            ['id' => '1', 'type' => 'page', 'parent' => '0', 'order' => '99', 'icon' => 'fas fa-user-astronaut', 'name' => 'Admin', 'link' => '#', 'child' => '1'],
             ['id' => '5', 'type' => 'page', 'parent' => '1', 'order' => '3', 'icon' => 'fas fa-tag', 'name' => 'Resource Management', 'link' => 'Page/Admin/Resource-management', 'child' => '0'],
             ['id' => '6', 'type' => 'request', 'parent' => '1', 'order' => '1', 'icon' => 'fas fa-tag', 'name' => 'List User', 'link' => 'Request/Admin/List-user', 'child' => '0'],
             ['id' => '7', 'type' => 'request', 'parent' => '1', 'order' => '1', 'icon' => 'fas fa-tag', 'name' => 'List Role', 'link' => 'Request/Admin/List-role', 'child' => '0'],
@@ -40,7 +40,7 @@ class MenuRoleSeeder extends Seeder
             ['id' => '20', 'type' => 'request', 'parent' => '1', 'order' => '1', 'icon' => 'fas fa-tag', 'name' => 'Save Accessable Menu/Request', 'link' => 'Request/Admin/Save-access-list-roles', 'child' => '0'],
 
             // Product
-            ['id' => '31', 'type' => 'page', 'parent' => '0', 'order' => '2', 'icon' => 'fas fa-product-hunt', 'name' => 'Product', 'link' => 'Page/Product', 'child' => '1'],
+            ['id' => '31', 'type' => 'page', 'parent' => '0', 'order' => '2', 'icon' => 'fa fa-shopping-bag', 'name' => 'Product', 'link' => 'Page/Product', 'child' => '1'],
             ['id' => '32', 'type' => 'request', 'parent' => '31', 'order' => '1', 'icon' => 'fas fa-tag', 'name' => 'Get List Products', 'link' => 'Request/Product/List-products', 'child' => '0'],
             ['id' => '33', 'type' => 'request', 'parent' => '31', 'order' => '1', 'icon' => 'fas fa-tag', 'name' => 'Get Single Products', 'link' => 'Request/Product/Product', 'child' => '0'],
             ['id' => '34', 'type' => 'request', 'parent' => '31', 'order' => '1', 'icon' => 'fas fa-tag', 'name' => 'Save Products', 'link' => 'Request/Product/Save-product', 'child' => '0'],
