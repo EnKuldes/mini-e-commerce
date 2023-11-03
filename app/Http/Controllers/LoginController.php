@@ -82,6 +82,12 @@ class LoginController extends Controller
 
         $data = \App\Models\User::create($data);
 
+        // assign to user role
+        \App\Models\RoleUser::create([
+            'role_id' => 2,
+            'user_id' => $data->id,
+        ]);
+
         if ($data->exists) {
             return redirect()->route('login')->with('status', 'Successfully registering!');;
         }

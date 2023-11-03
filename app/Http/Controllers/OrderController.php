@@ -48,14 +48,14 @@ class OrderController extends Controller
 
     public function getListOrders(Request $request)
     {
-        $model = \App\Models\Order::select('id', 'order_date', 'total_price', 'order_status');
+        $model = \App\Models\Order::select('id', 'order_date', 'total_price', 'order_status')->where('user_id', '=', \Auth::id());
         return Datatables::of($model)->setRowId('id')->addIndexColumn()->addColumn(
             'tools',
             function ($record) {
                 return '<button type="button" class="btn btn-sm btn-outline-info" onclick="f_view_order(' . $record->id . ')"><i class="fas fa-glasses"></i> View</button>';
             }
         )->editColumn('order_date', function ($record) {
-            return $record->order_date->format('Y-m-d H:i:s');
+            return optional($record->order_date)->format('Y-m-d H:i:s');
         })->editColumn('total_price', function ($record) {
             return 'Rp. '.number_format($record->total_price,2);
         })->rawColumns(['tools'])->toJson();
@@ -90,7 +90,7 @@ class OrderController extends Controller
             }, 'orderDetails.product' => function ($query) {
                 return $query->select('id', 'name', 'description', 'price', 'images');
             }])->firstOrFail();
-            $data->ordered_at = $data->order_date->format('Y-m-d H:i:s');
+            $data->ordered_at = ($data->order_date ? "Ordered At ".$data->order_date->format('Y-m-d H:i:s') : "In Cart");
             return response()->json($data, 200);
         } catch (\Illuminate\Database\QueryException $e) {
             return response()->json(['message' => 'Failed to fetch data. '], 500);
