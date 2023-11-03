@@ -1,66 +1,77 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Mini E-Commerce
 
-## About Laravel
+Plain simple e-commerce with role based access control, CRUD Products and Order Management (Up to checkout without finance transaction). Using AdminLTE Template for UI and Laravel as Backend Framework that handles both API and Web Application.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Requirements
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+ - PHP ^8.1:
+		 - make sure those modules are enabled ***bcmath, calendar, Core, ctype, curl, date, dom, exif, fileinfo, filter, gd, hash, iconv, intl, json, libxml, mbstring, mysqli, mysqlnd, oci8, openssl, pcre, PDO, pdo_mysql, pdo_pgsql, Phar, readline, Reflection, session, SimpleXML, sodium, SPL, standard, tokenizer, xml, xmlreader, xmlwriter, xsl, zip, zlib***
+ - Composer
+ - Git, its optional, you can just download it from this repo
+ - MySQL/MariaDB
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Installation
 
-## Learning Laravel
+ 1. Clone or download (and extract the repo) [this repo](https://github.com/EnKuldes/mini-e-commerce.git) to your desired path.
+ 2. Open terminal/cmd and change directory to repo directory. Then run the following command
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+    ``` bash
+    # install repo
+    composer install
+    
+    # copy env file
+    cp .env.example .env
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+		# generate app key
+		php artisan key:generate
+		
+		# create symbolic link for storage folder
+		php artisan storage:link
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+		# run migration and seeder, make sure that .env file already being setup (host, password, user, port and database)
+		php artisan migrate --seed
 
-## Laravel Sponsors
+		# run laravel passport keys to generate
+		php artisan passport:install
+    ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+ 3. Edit .env file to your need (ex. DB_HOST, DB_PASSWORD, APP_NAME, APP_ENV, etc) using your fav text editor. And if you're on Linux for example using Centos and there is an error on storage kinda things, make sure that selinux(RedHat variant) is allowing to write/read or permission is set to 755(rwx-rw-rw).
 
-### Premium Partners
+And thats it for installation. Next to Usage.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Usage
 
-## Contributing
+If you're using it on local machine, you can run it by this command:
+```bash
+php artisan serve
+```
+Then you can access it on http://localhost:8000.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+There is 3 user with 3 different roles that I already created, that is:
 
-## Code of Conduct
+ - Role Admin with email **Administrator@admin.com** and password **4dm1n987**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+> Admin role have permission to access resources management, where admin can create/edit/disable/enable user, role and menu. Mapping user to a role/s and mapping each role to menu/request.
 
-## Security Vulnerabilities
+ - Role User with email **user@user.com** and password **u53rtest**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+> User can access orders like browsing product, adding/removing product to cart, modify qty on product in cart, checkout cart and see order history.
 
-## License
+ - Role Manager with email **Manager@manager.com** and password **m4n46eR**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+> Manager role can access Products menu, which can CRUD Products.
+
+On this project, Im also serve REST API with Laravel Passport as authentication. You can read it more in this [link here](https://documenter.getpostman.com/view/10072189/2s9YXe84gG) or import it to Postman.
+
+## About Project
+
+This project is created to fullfill a task for my future employement. For the architecture itself what I have in mind is 1 Server which database server, web server and file/asset are on this server, it would be better if the future architecture split for all those 3 things to reduce workload of server. For example I would love to use SFTP or Cloud to put all the project uploaded files in there as is to reducing storage usage on our infrastructures, adding a load-balancer to make sure even on big traffic the application can still running smoothly.
+
+For the database itself, Im making it simple based on task that I given and understood, the ERD itself looks like this:
+
+![ERD](./erd.png)
+
+Table Order have 2 relationship, that is to Table User (Many to One) and Table OrderDetail (One to Many). Since Table Order also functioning as history, im adding indexes both on order_status and order_date becasue those 2 columns would most likely being used as filter to show data using between or other conditionals.
+I'm also creating role based access control, with tables like Role, AccessList, RoleUser and AccessListRole. Table AccessList includes record for all of the pages and request. Table RoleUser and AccessListRole is a pivot table that connect between Role with User table and Access List with Role table. With this relationship User can have multiple roles and so role with access list table.
+For future improvement adding a category table to describe what are the product caterogized is a good thing as its will help on creating recommendation system.
