@@ -73,31 +73,29 @@ if (!function_exists('show_menu')) {
 		foreach ($data as $record) {
 			if ($record->parent == 0) {
 				if (is_null($record->child_menu)) {
-					$htmlBlade .= "<li class='side-nav-item ".($record->link == $path ? 'menuitem-active' : '')."'>
-	          <a href='".url($record->link)."' class='side-nav-link'>
-	            <i class='".$record->icon."'></i>
-	            <span> ".$record->name." </span>
+					$htmlBlade .= "<li class='nav-item'>
+	          <a href='".url($record->link)."' class='nav-link ".($record->link == $path ? 'active' : '')."'>
+	            <i class='nav-icon ".$record->icon."'></i>
+	            <p> ".$record->name." </p>
 	          </a>
 	        </li>";
 				} else {
-					$htmlBlade .= "<li class='side-nav-item'>
-	            <a data-bs-toggle='collapse' href='#sidebar".$record->id."' aria-expanded='false' aria-controls='sidebar".$record->id."' class='side-nav-link'>
-	                <i class='".$record->icon."'></i>
-	                <span> ".$record->name." </span>
-	                <span class='menu-arrow'></span>
+					$htmlBlade .= "<li class='nav-item ".($record->link == $path ? 'active' : '')."'>
+	            <a href='".url($record->link)."' class='nav-link ".($record->link == $path ? 'active' : '')."'>
+	                <i class='nav-icon ".$record->icon."'></i>
+	                <p> ".$record->name." <i class='right fas fa-angle-left'></i></p>
 	            </a>
-	            <div class='collapse' id='sidebar".$record->id."'>
-	                <ul class='side-nav-second-level'>";
+	            <ul class='nav nav-treeview'>";
 	        	
 	        $htmlBlade .= show_menu($record->child_menu, $path);
 
 					$htmlBlade .= "</ul>
-	                            </div>
 	                        </li>";
 				}
 			} else {
-				$htmlBlade .= "<li class='".($record->link == $path ? 'menuitem-active' : '')."'>
-                          <a href='".url($record->link)."' class='".($record->link == $path ? 'active' : '')."'>".$record->name."</a>
+				$htmlBlade .= "<li class='nav-item ".($record->link == $path ? 'active' : '')."'>
+                          <a href='".url($record->link)."' class='nav-link ".($record->link == $path ? 'active' : '')."'><i class='nav-icon ".$record->icon."'></i>
+	            <p> ".$record->name." </p></a>
                       </li>";
 			}
 

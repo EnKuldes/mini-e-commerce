@@ -13,12 +13,12 @@
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-          <i class="fas fa-expand-arrows-alt"></i>
+          <i class="fas fa-expand-arrows-alt"></i> Fullscreen
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#logout" role="button" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-          <i class="fas fa-door-closed"></i>
+          <i class="fas fa-door-closed"></i> Logout
         </a>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;"> @csrf </form>
       </li>

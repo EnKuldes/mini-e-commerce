@@ -13,12 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/tes', function () {
+/*Route::get('/tes', function () {
     return view('admin.home');
 })->name('halaman-tes-get');
 Route::get('/tes1', function () {
     return view('admin.home');
-})->middleware('auth')->name('halaman-tes-auth');
+})->middleware('auth')->name('halaman-tes-auth');*/
 
 // Auth Routes
 Route::get('/login', 'App\Http\Controllers\LoginController@showLoginForm')->name('login');
