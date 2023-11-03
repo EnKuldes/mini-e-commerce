@@ -60,7 +60,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required'
             , 'description' => 'required'
-            , 'price' => 'required'
+            , 'price' => 'required|numeric'
             , 'attachments' => 'required_without:product_id'
             , 'attachments.*' => 'image|max:2048'
         ]);
