@@ -40,11 +40,12 @@ class MenuRoleSeeder extends Seeder
             ['id' => '20', 'type' => 'request', 'parent' => '1', 'order' => '1', 'icon' => 'fas fa-tag', 'name' => 'Save Accessable Menu/Request', 'link' => 'Request/Admin/Save-access-list-roles', 'child' => '0'],
 
             // Product
-            ['id' => '31', 'type' => 'page', 'parent' => '0', 'order' => '2', 'icon' => 'fa fa-shopping-bag', 'name' => 'Product', 'link' => 'Page/Product', 'child' => '1'],
+            ['id' => '31', 'type' => 'page', 'parent' => '0', 'order' => '2', 'icon' => 'fa fa-shopping-bag', 'name' => 'Product', 'link' => '#', 'child' => '1'],
             ['id' => '32', 'type' => 'request', 'parent' => '31', 'order' => '1', 'icon' => 'fas fa-tag', 'name' => 'Get List Products', 'link' => 'Request/Product/List-products', 'child' => '0'],
             ['id' => '33', 'type' => 'request', 'parent' => '31', 'order' => '1', 'icon' => 'fas fa-tag', 'name' => 'Get Single Products', 'link' => 'Request/Product/Product', 'child' => '0'],
             ['id' => '34', 'type' => 'request', 'parent' => '31', 'order' => '1', 'icon' => 'fas fa-tag', 'name' => 'Save Products', 'link' => 'Request/Product/Save-product', 'child' => '0'],
             ['id' => '35', 'type' => 'request', 'parent' => '31', 'order' => '1', 'icon' => 'fas fa-tag', 'name' => 'Delete Products', 'link' => 'Request/Product/Delete-product', 'child' => '0'],
+            ['id' => '36', 'type' => 'page', 'parent' => '31', 'order' => '1', 'icon' => 'fas fa-house-user', 'name' => 'Home', 'link' => 'Page/Product/Home', 'child' => '0'],
 
             // Order
             ['id' => '51', 'type' => 'page', 'parent' => '0', 'order' => '1', 'icon' => 'fas fa-shopping-basket', 'name' => 'Order', 'link' => '#', 'child' => '1'],
@@ -88,7 +89,7 @@ class MenuRoleSeeder extends Seeder
             $access_role[] = ['role_id' => '2', 'access_list_id' => $i];
         }
         // Manager
-        for ($i=31; $i < 36; $i++) { 
+        for ($i=31; $i < 37; $i++) { 
             $access_role[] = ['role_id' => '3', 'access_list_id' => $i];
         }
 

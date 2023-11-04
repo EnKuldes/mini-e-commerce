@@ -17,7 +17,7 @@ class ProductController extends Controller
     }
 
     // Halamannya
-    public function index()
+    public function pageHome()
     {
         return view('product.index');
     }
@@ -87,6 +87,7 @@ class ProductController extends Controller
                             Storage::delete($path);
                         }
                     }
+                    $listAttachment = [];
                 }
                 // cek kalo ada product id nya, hapus foto foto lama, dan upload pake foto foto baru
                 foreach ($request->file('attachments') as $key => $file) {

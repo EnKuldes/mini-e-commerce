@@ -1,6 +1,6 @@
 {{-- Extends Layout Auth --}}
 @extends('layouts.app')
-@section('title', 'Products')
+@section('title', 'Products Management')
 
 {{-- Push ke Stack --}}
 @push('extra-lib-css')
