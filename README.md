@@ -68,6 +68,8 @@ On this project, Im also serve REST API with Laravel Passport as authentication.
 
 This project is created to fullfill a task for my future employement. For the architecture itself what I have in mind is 1 Server which database server, web server and file/asset are on this server, it would be better if the future architecture split for all those 3 things to reduce workload of server. For example I would love to use SFTP or Cloud to put all the project uploaded files in there as is to reducing storage usage on our infrastructures, adding a load-balancer to make sure even on big traffic the application can still running smoothly.
 
+And for the Reset Password implementation it would be better to add more security like sending mail to the requested user with a link to reset password.
+
 For the database itself, Im making it simple based on task that I given and understood, the ERD itself looks like this:
 
 ![ERD](./erd.png)
